@@ -4,18 +4,21 @@ from yaml import load, Loader
 from pprint import pprint
 import json
 from hashlib import md5
+import os
 
 from config_model import Config, Pane
 
 global_config: Config = None
 config_hash = ""
 
+CONFIG_FILE = os.getenv("CONFIG_FILE", "./config/config.yml")
+
 def load_config():
     global config_hash
     global global_config
 
     print("Loading config...")
-    config = load(open("config/config.yml"), Loader=Loader)
+    config = load(open(CONFIG_FILE), Loader=Loader)
 
     # create a hash of the config
     string = json.dumps(config, sort_keys=True)
